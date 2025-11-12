@@ -4,6 +4,7 @@
 *.pyc
 *.swp
 .DS_Store
+Thumbs.db
 .atom/
 .buildlog/
 .history
@@ -14,6 +15,8 @@
 *.ipr
 *.iws
 .idea/
+.vscode/
+.fleet/
 
 # The .vscode folder contains launch configuration and tasks you configure in
 # VS Code which you may wish to be included in version control, so this line
@@ -21,15 +24,18 @@
 #.vscode/
 
 # Flutter/Dart/Pub related
-**/doc/api/
-**/ios/Flutter/.last_build_id
+.metada
 .dart_tool/
 .flutter-plugins
 .flutter-plugins-dependencies
 .packages
+**/doc/api/
+**/ios/Flutter/.last_build_id
+.dart_tool/
 .pub-cache/
 .pub/
 /build/
+coverage/
 
 # Web related
 lib/generated_plugin_registrant.dart
@@ -44,3 +50,33 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+#android/.gradle/
+android/local.properties
+android/key.properties
+android/app/*.keystore
+android/app/*.jks
+android/app/crashlytics-build.properties
+
+# iOS
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Flutter.podspec
+ios/Flutter/Generated.xcconfig
+ios/Flutter/flutter_export_environment.sh
+ios/Flutter/ephemeral/
+**/*.xcworkspace/xcuserdata/
+**/DerivedData/
+
+# Desktop (Flutter)
+linux/flutter/ephemeral/
+macos/Flutter/ephemeral/
+windows/flutter/ephemeral/
+
+# Segreti / env (decidete policy di team)
+.env
+.env.*
+*.secret.*
+
+# Opzionali per Firebase (decidete se ignorarli)
+# android/app/google-services.json
+# ios/Runner/GoogleService-Info.plist
