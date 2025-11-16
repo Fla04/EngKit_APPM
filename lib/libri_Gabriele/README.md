@@ -1,2 +1,0 @@
-Aggiungo in questa cartella i pdf dei libri che aveva caricato tempo fa Gabriele, in modo che possano essere d'aiuto a tutti.
-Eventualmente, una volta scaricati (per chi non l'avesse fatto), si possono eliminare.
