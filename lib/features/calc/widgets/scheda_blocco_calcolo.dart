@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:math_keyboard/math_keyboard.dart';
+import 'package:engkit/features/calc/domain/usecases/valuta_espressione.dart';
 
 /// Widget che rappresenta graficamente un BloccoCalcolo.
 class SchedaBloccoCalcolo extends StatefulWidget {
@@ -15,6 +16,7 @@ class SchedaBloccoCalcolo extends StatefulWidget {
 }
 
 class _SchedaBloccoCalcoloState extends State<SchedaBloccoCalcolo> {
+  double? _ultimoRisultato;
   // Controller opzionale per il MathField (Valutare implementazione?)
   final MathFieldEditingController _controller = MathFieldEditingController();
 
@@ -53,10 +55,19 @@ class _SchedaBloccoCalcoloState extends State<SchedaBloccoCalcolo> {
                 // stato in tempo reale del blocco di calcolo
               },
               onSubmitted: (tex) {
-                //final risultato = ValutaEspressione()(tex);
-                //setState(() => _ultimoRisultato = risultato);
+                final valutatore = ValutaEspressione();
+                final risultato = valutatore(tex);
+
+                setState(() {
+                  _ultimoRisultato = risultato;
+                });
               },
             ),
+            const SizedBox(height: 8),
+
+            //Visualizzo il risultato
+            if (_ultimoRisultato != null)
+              Text('Risultato: $_ultimoRisultato'),
           ],
         ),
       ),
