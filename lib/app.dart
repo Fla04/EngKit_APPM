@@ -3,7 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'router.dart';
 
-
+/// Widget radice dell'app Engkit.
 class EngkitApp extends StatelessWidget {
   const EngkitApp({super.key});
 
@@ -13,20 +13,12 @@ class EngkitApp extends StatelessWidget {
       title: 'Engkit',
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
-
-      // Configurazione del router (go_router).
       routerConfig: routerPrincipale,
-
-      // Lingua di default: italiano.
       locale: const Locale('it', 'IT'),
-
-      // Lingue supportate dall'app.
       supportedLocales: const [
         Locale('en', 'US'),
         Locale('it', 'IT'),
       ],
-
-      // Delegati per le traduzioni di Material, Widgets, Cupertino.
       localizationsDelegates: const [
         GlobalMaterialLocalizations.delegate,
         GlobalWidgetsLocalizations.delegate,
