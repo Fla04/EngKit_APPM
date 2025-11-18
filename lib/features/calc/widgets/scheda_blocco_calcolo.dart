@@ -17,6 +17,7 @@ class SchedaBloccoCalcolo extends StatefulWidget {
 
 class _SchedaBloccoCalcoloState extends State<SchedaBloccoCalcolo> {
   double? _ultimoRisultato;
+
   // Controller opzionale per il MathField (Valutare implementazione?)
   final MathFieldEditingController _controller = MathFieldEditingController();
 
@@ -64,7 +65,6 @@ class _SchedaBloccoCalcoloState extends State<SchedaBloccoCalcolo> {
               },
             ),
             const SizedBox(height: 8),
-
             //Visualizzo il risultato
             if (_ultimoRisultato != null)
               Text('Risultato: $_ultimoRisultato'),

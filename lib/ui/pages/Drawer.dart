@@ -1,5 +1,9 @@
-import 'package:flutter/material.dart';
+import 'package:engkit/features/calc/pages/algebra.dart';
+import 'package:engkit/features/calc/pages/grafico.dart';
 import 'package:engkit/features/calc/pages/home_calcolo.dart';
+import 'package:engkit/features/calc/pages/pagina_blocchi_calcolo.dart';
+import 'package:engkit/features/calc/pages/probabilita.dart';
+import 'package:flutter/material.dart';
 
 class MyDrawer extends StatelessWidget {
   final ValueChanged<ThemeMode> onThemeModeChanged;
@@ -36,6 +40,82 @@ class MyDrawer extends StatelessWidget {
                 MaterialPageRoute(
                   builder: (_) => HomeCalcolo(
                     title: 'Home Calcoli',
+                    onThemeModeChanged: onThemeModeChanged,
+                    currentThemeMode: currentThemeMode,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          //Sezione blocchi calcolo
+          ListTile(
+            leading: const Icon(Icons.functions),
+            title: const Text('Blocchi calcolo (Trovare titolo)'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => PaginaBlocchiCalcolo(
+                    title: 'Pagina blocchi calcolo',
+                    onThemeModeChanged: onThemeModeChanged,
+                    currentThemeMode: currentThemeMode,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          //Sezione probabilità
+          ListTile(
+            leading: const Icon(Icons.percent),
+            title: const Text('Probabilità'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Probabilita(
+                    title: 'Probabilità',
+                    onThemeModeChanged: onThemeModeChanged,
+                    currentThemeMode: currentThemeMode,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          //Sezione algebra
+          ListTile(
+            leading: const Icon(Icons.grid_on_outlined),
+            title: const Text('Algebra'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Algebra(
+                    title: 'Algebra',
+                    onThemeModeChanged: onThemeModeChanged,
+                    currentThemeMode: currentThemeMode,
+                  ),
+                ),
+              );
+            },
+          ),
+
+          //Sezione Grafico
+          ListTile(
+            leading: const Icon(Icons.graphic_eq),
+            title: const Text('Grafico'),
+            onTap: () {
+              Navigator.pop(context);
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (_) => Grafico(
+                    title: 'Grafico',
                     onThemeModeChanged: onThemeModeChanged,
                     currentThemeMode: currentThemeMode,
                   ),

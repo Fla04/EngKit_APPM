@@ -1,10 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:math_keyboard/math_keyboard.dart';
-
 import 'package:engkit/features/calc/widgets/scheda_blocco_calcolo.dart';
+import 'package:engkit/ui/pages/Drawer.dart';
 
 class PaginaBlocchiCalcolo extends StatelessWidget {
-  const PaginaBlocchiCalcolo({super.key});
+  final String title;
+  final ValueChanged<ThemeMode> onThemeModeChanged;
+  final ThemeMode currentThemeMode;
+
+  const PaginaBlocchiCalcolo({
+    super.key,
+    required this.title,
+    required this.onThemeModeChanged,
+    required this.currentThemeMode,
+});
+
 
   /*
   Crea una vista MathKeyboardViewInsets (della libreria) per fare in modo
@@ -13,10 +23,15 @@ class PaginaBlocchiCalcolo extends StatelessWidget {
    */
   @override
   Widget build(BuildContext context) {
+    //Struttura del build tramite tastiera math_kaybord (di defulat)
     return MathKeyboardViewInsets(
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Blocchi di calcolo'),
+          title: Text(title),
+        ),
+        drawer: MyDrawer(
+          onThemeModeChanged: onThemeModeChanged,
+          currentThemeMode: currentThemeMode,
         ),
         body: const _CorpoBlocchiCalcolo(),
       ),
@@ -38,6 +53,7 @@ class _CorpoBlocchiCalcolo extends StatelessWidget {
         SizedBox(height: 16),
         SchedaBloccoCalcolo(titolo: 'Campo prova 2'),
       ],
+
     );
   }
 }

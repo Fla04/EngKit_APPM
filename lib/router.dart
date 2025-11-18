@@ -1,3 +1,4 @@
+/*import 'package:engkit/features/calc/pages/home_calcolo.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,7 +13,7 @@ final GoRouter routerPrincipale = GoRouter(
     GoRoute(
       path: '/calc',      // URL interno
       name: 'calcolo',    // nome simbolico della route
-      builder: (context, state) => const PaginaBlocchiCalcolo(),
+      builder: (context, state) => const HomeCalcolo(title: title, onThemeModeChanged: onThemeModeChanged, currentThemeMode: currentThemeMode),
     ),
   ],
-);
+);*/
