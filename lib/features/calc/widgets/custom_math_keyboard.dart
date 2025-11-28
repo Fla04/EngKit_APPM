@@ -1,4 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+
+enum MathKeyboardProfile {
+  blocchi,      // pagina blocchi di calcolo / generico
+  algebra,      // pagina algebra
+  probabilita,  // pagina probabilità / statistica
+  grafico,      // pagina grafico
+}
 
 /// Icona per il tasto divisione, stile "a sopra b" con una riga in mezzo.
 class FractionIcon extends StatelessWidget {
@@ -51,16 +60,21 @@ class CustomMathKeyboard extends StatefulWidget {
   final VoidCallback onClose;
   final VoidCallback? onEvaluate;
 
+  /// Profilo della tastiera: decide quali tasti abilitare / disabilitare.
+  final MathKeyboardProfile profile;
+
   const CustomMathKeyboard({
     super.key,
     required this.controller,
     required this.onClose,
     this.onEvaluate,
+    this.profile = MathKeyboardProfile.blocchi, // default: come prima
   });
 
   @override
   State<CustomMathKeyboard> createState() => _CustomMathKeyboardState();
 }
+
 
 enum _KeyboardMode { basic, functions, advanced }
 
@@ -80,6 +94,98 @@ class _CustomMathKeyboardState extends State<CustomMathKeyboard> {
   _KeyboardMode _mode = _KeyboardMode.basic;
   //getter per variazioni di colori in base al tema
   bool get _isDark => Theme.of(context).brightness == Brightness.dark;
+
+  /// Restituisce true se il tasto con questa [label] è abilitato
+  /// nel profilo corrente della tastiera.
+  bool _isKeyEnabled(String label) {
+    switch (widget.profile) {
+      case MathKeyboardProfile.blocchi:
+        const disabled = <String>{
+          'M',
+          '[□]',
+          'det',
+          'Aᵀ',
+        };
+        return !disabled.contains(label);
+
+      case MathKeyboardProfile.algebra:
+      //Tasti disabilitati nel profilo algebra
+        const disabled = <String>{
+          '∫',
+          '∫ₐᵇ',
+          'Σ',
+          'Π',
+          'lim',
+          'd/dx',
+          '|□|',
+          '∞',
+        };
+        return !disabled.contains(label);
+
+      case MathKeyboardProfile.probabilita:
+      // In probabilità magari non servono derivate e matrici
+        const disabled = <String>{
+          'd/dx',
+          'M',
+          'Aᵀ',
+          'det',
+        };
+        return !disabled.contains(label);
+
+      case MathKeyboardProfile.grafico:
+      // Nel grafico ti interessano funzioni e operatori base
+        const disabled = <String>{
+          '∫',
+          '∫ₐᵇ',
+          'Σ',
+          'Π',
+          'lim',
+          'd/dx',
+          'M',
+          'det',
+          'Aᵀ',
+        };
+        return !disabled.contains(label);
+    }
+  }
+
+
+  Future<void> _showVariableDialog() async {
+    final scelta = await showDialog<String>(
+      context: context,
+      builder: (ctx) {
+        return SimpleDialog(
+          backgroundColor: const Color(0xFF202020),
+          title: const Text(
+            'Scegli variabile',
+            style: TextStyle(color: Colors.white),
+          ),
+          children: [
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(ctx).pop('x'),
+              child: const Text('x', style: TextStyle(color: Colors.white)),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(ctx).pop('y'),
+              child: const Text('y', style: TextStyle(color: Colors.white)),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(ctx).pop('z'),
+              child: const Text('z', style: TextStyle(color: Colors.white)),
+            ),
+            SimpleDialogOption(
+              onPressed: () => Navigator.of(ctx).pop('t'),
+              child: const Text('t', style: TextStyle(color: Colors.white)),
+            ),
+          ],
+        );
+      },
+    );
+
+    if (scelta != null) {
+      _insertText(scelta);
+    }
+  }
 
 
   // ------------------- utility inserimento / wrapping testo -------------------
@@ -222,13 +328,23 @@ class _CustomMathKeyboardState extends State<CustomMathKeyboard> {
         int flex = 1,
         int cursorFromEnd = 0,
         VoidCallback? onTap,
+        VoidCallback? onLongPress,
         Widget? child,
       }) {
     final theme = Theme.of(context);
     final isDark = _isDark;
-    final fgColor = isDark
-        ? Colors.white
-        : theme.colorScheme.onPrimaryContainer; // testo scuro su sfondo chiaro
+
+    // decide se il tasto è abilitato o no in base al profilo
+    final enabled = _isKeyEnabled(label);
+
+    final baseBg = _bgFor(type);
+    final bgColor = enabled
+        ? baseBg
+        : baseBg.withOpacity(isDark ? 0.4 : 0.3);
+
+    final fgColor = enabled
+        ? (isDark ? Colors.white : theme.colorScheme.onPrimaryContainer)
+        : (isDark ? Colors.white38 : theme.disabledColor);
 
     return Expanded(
       flex: flex,
@@ -240,20 +356,32 @@ class _CustomMathKeyboardState extends State<CustomMathKeyboard> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(10),
             ),
-            backgroundColor: _bgFor(type),
+            backgroundColor: bgColor,
             foregroundColor: fgColor,
           ),
-          onPressed: onTap ??
-                  () {
-                if (insert != null) {
-                  _insertText(insert, cursorOffsetFromEnd: cursorFromEnd);
-                }
-              },
+          onLongPress: !enabled ? null : onLongPress,
+          onPressed: !enabled
+              ? null
+              : () {
+            // HAPTIC FEEDBACK: solo per alcuni tasti "forti"
+            if (type == _KeyType.control || label == '=' || label == '⌫') {
+              HapticFeedback.mediumImpact();
+            } else {
+              HapticFeedback.selectionClick();
+            }
+
+            if (onTap != null) {
+              onTap();
+            } else if (insert != null) {
+              _insertText(insert, cursorOffsetFromEnd: cursorFromEnd);
+            }
+          },
           child: child ?? Text(label),
         ),
       ),
     );
   }
+
 
 
   // ------------------------- POP-UP: LOGARITMI -------------------------------
@@ -1401,8 +1529,8 @@ class _CustomMathKeyboardState extends State<CustomMathKeyboard> {
           children: [
             _key('log', type: _KeyType.function, onTap: _showLogDialog),
             _key('e', insert: 'e', type: _KeyType.function),
-            _key('x', insert: 'x', type: _KeyType.function),
-            _key('y', insert: 'y', type: _KeyType.function),
+            _key('x', insert: 'x', type: _KeyType.function,  onLongPress: _showVariableDialog,),
+            _key('y', insert: 'y', type: _KeyType.function,  onLongPress: _showVariableDialog,),
           ],
         ),
         // riga per emergenze Tex
