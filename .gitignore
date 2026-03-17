@@ -1,151 +1,46 @@
-# SISTEMA / EDITOR / VARI
-# File temporanei e di sistema
-.DS_Store
-Thumbs.db
-*.swp
-*.tmp
-*.log
+# Miscellaneous
 *.class
+*.log
 *.pyc
-
-# Cronologia/ide varie
+*.swp
+.DS_Store
 .atom/
 .buildlog/
-.history/
+.history
 .svn/
 
-# JetBrains / Android Studio
-.idea/
+# IntelliJ related
 *.iml
 *.ipr
 *.iws
+.idea/
 
-# VS Code (se NON volete versionare le config locali, scommentate)
+# The .vscode folder contains launch configuration and tasks you configure in
+# VS Code which you may wish to be included in version control, so this line
+# is commented out by default.
 #.vscode/
 
-# JetBrains Fleet
-.fleet/
-
-# DART / FLUTTER / PUB
-# stato locale di Flutter
-.metadata
-# cache/build tool di Dart
+# Flutter/Dart/Pub related
+**/doc/api/
+**/ios/Flutter/.last_build_id
 .dart_tool/
 .flutter-plugins
-# generato da Flutter
 .flutter-plugins-dependencies
 .packages
 .pub-cache/
 .pub/
-
-# Output build multipiattaforma
 /build/
-# documentazione generata
-**/doc/api/
-# report test coverage
-coverage/
 
-# Registrant generato (web e varianti)
+# Web related
 lib/generated_plugin_registrant.dart
 
-# ANDROID
-# Cartelle build Android Studio
+# Symbolication related
+app.*.symbols
+
+# Obfuscation related
+app.*.map.json
+
+# Android Studio will place build artifacts here
 /android/app/debug
 /android/app/profile
 /android/app/release
-
-# Cache e config locali
-android/.gradle/
-# SDK path locale
-android/local.properties
-# riferimento a keystore locale
-android/key.properties
-
-# Chiavi/keystore locali (NON vanno mai in repo)
-android/app/*.keystore
-android/app/*.jks
-
-# Crashlytics / strumenti di build
-android/app/crashlytics-build.properties
-
-# (Promemoria) Mantieni in repo il Gradle wrapper:
-# gradlew, gradlew.bat, gradle/wrapper/**  <-- NON ignorare!
-
-
-# iOS / XCODE / COCOAPODS
-# dipendenze CocoaPods
-ios/Pods/
-# link a risorse locali
-ios/.symlinks/
-ios/Flutter/Flutter.podspec
-ios/Flutter/Generated.xcconfig
-ios/Flutter/flutter_export_environment.sh
-# output effimero Flutter
-ios/Flutter/ephemeral/
-
-# Dati Xcode specifici dell'utente/macchina
-**/*.xcworkspace/xcuserdata/
-**/*.xcodeproj/project.xcworkspace/xcuserdata/
-**/*.xcodeproj/xcuserdata/
-**/*.xcuserstate
-**/*.xcscmblueprint
-**/DerivedData/
-
-# (Promemoria) Mantieni in repo:
-# - ios/Podfile
-# - ios/Podfile.lock
-
-
-# DESKTOP (Linux / macOS / Windows)
-# Cartelle effimere generate da Flutter
-linux/flutter/ephemeral/
-macos/Flutter/ephemeral/
-windows/flutter/ephemeral/
-
-# File registrant generati automaticamente dai plugin desktop
-linux/flutter/generated_plugin_registrant.cc
-linux/flutter/generated_plugin_registrant.h
-linux/flutter/generated_plugins.cmake
-
-windows/flutter/generated_plugin_registrant.cc
-windows/flutter/generated_plugin_registrant.h
-windows/flutter/generated_plugins.cmake
-
-macos/Flutter/GeneratedPluginRegistrant.swift
-
-
-# OBFUSCATION / SYMBOLICATION
-app.*.symbols
-app.*.map.json
-
-
-# SEGRETI / CONFIG LOCALI
-# Variabili d'ambiente e file di configurazione locale
-.env
-.env.*
-*.secret.*
-*.private.*
-*.pem
-*.p12
-*.p8
-*.key
-*.keystore
-
-# (Opzionale) Se gestite Firebase via CI/secret manager, ignorate anche:
-# android/app/google-services.json
-# ios/Runner/GoogleService-Info.plist
-# Altrimenti, se decidete come team di tenerli in repo, lasciate le righe qui sopra commentate.
-
-
-# STRUMENTI / AUTOMAZIONI (OPZIONALI)
-# Fastlane (sconsigliato committare artefatti, ma mantenere le config)
-#fastlane/report.xml
-#fastlane/Preview.html
-#fastlane/screenshots/
-#output/
-
-# Flutterfire CLI (se si genera configurazioni locali extra)
-#firebase_app_id_file.json
-
-# Melos (monorepo) — di solito si committa melos.yaml, non i build
-# .dart_tool/** già copre le cache rilevanti
