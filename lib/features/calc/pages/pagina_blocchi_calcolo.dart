@@ -49,12 +49,12 @@ class _PaginaBlocchiCalcoloState extends State<PaginaBlocchiCalcolo> {
     FocusScope.of(context).unfocus();
   }
 
-  void _aggiungiBlocco() {
+  /*void _aggiungiBlocco() {
     setState(() {
       final index = _blocchiTitoli.length + 1;
       _blocchiTitoli.add('Blocco $index');
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {
@@ -69,11 +69,11 @@ class _PaginaBlocchiCalcoloState extends State<PaginaBlocchiCalcolo> {
         onThemeModeChanged: widget.onThemeModeChanged,
         currentThemeMode: widget.currentThemeMode,
       ),
-      floatingActionButton: FloatingActionButton.extended(
+      /*floatingActionButton: FloatingActionButton.extended(
         onPressed: _aggiungiBlocco,
         icon: const Icon(Icons.add),
         label: const Text('Nuovo blocco'),
-      ),
+      ),*/
       body: Stack(
         children: [
           ListView(
